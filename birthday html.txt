@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* =========================
+   GLOBAL THEME – 2025 DARK MODE
+   ========================= */
+:root {
+  --bg: #0b0d11;
+  --fg: #f1f1f1;
+  --accent: #7b5cff;
+  --accent2: #ff4fa2;
+  --glass: rgba(255,255,255,0.05);
+  --blur: blur(22px);
+  --radius: 24px;
+  --font-main: 'Inter', sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-main);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+section {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+}
+
+/* =========================
+   FLOATING PARTICLES
+   ========================= */
+#particles {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* =========================
+   STAGE INTRO
+   ========================= */
+.hero {
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  z-index:3;
+  opacity:0;
+  transform: translateY(20px);
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: 800;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  opacity: 0.8;
+}
+
+/* =========================
+   GLASS CARDS
+   ========================= */
+.card {
+  max-width: 700px;
+  padding: 40px;
+  border-radius: var(--radius);
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+  border: 1px solid rgba(255,255,255,0.08);
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 2.2rem;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.reveal-btn {
+  margin-top: 25px;
+  padding: 14px 26px;
+  font-size: 1rem;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border:none;
+  border-radius: 50px;
+  color:white;
+  cursor:pointer;
+  transition: 0.3s ease;
+}
+
+.reveal-btn:hover {
+  transform: scale(1.05);
+}
+
+/* =========================
+   FINAL SECTION
+   ========================= */
+#final {
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  opacity:0;
+  transform:translateY(20px);
+}
+
+#final h1 {
+  font-size: 3rem;
+}
+
+#final p {
+  font-size: 1.4rem;
+  opacity:0.85;
+}
+
+/* ANIMATIONS */
+.fade-in {
+  transition: 1.2s ease;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- =========================
+     SECTION 1 – INTRO
+     ========================= -->
+<section id="intro">
+  <div class="hero fade-in">
+    <h1>Happy Birthday, Bestie 🎉</h1>
+    <p>Today is all about celebrating you — your light, your laugh, your heart.</p>
+  </div>
+</section>
+
+<!-- =========================
+     SECTION 2 – CARD 1
+     ========================= -->
+<section id="moment1">
+  <div class="card fade-in">
+    <h2>A Little Journey…</h2>
+    <p>
+      Before the wishes, before the surprises — let’s pause.  
+      I want you to feel how deeply appreciated you are.
+    </p>
+    <button class="reveal-btn" onclick="revealText(1)">Reveal Message</button>
+    <p id="msg1" style="display:none; margin-top:20px; font-size:1.2rem;">
+      You bring color to ordinary days and calm to chaotic ones.  
+      You matter more than you know.
+    </p>
+  </div>
+</section>
+
+<!-- =========================
+     SECTION 3 – CARD 2
+     ========================= -->
+<section id="moment2">
+  <div class="card fade-in">
+    <h2>A Wish From Me to You</h2>
+    <p>
+      Ready for your real birthday wish?
+    </p>
+    <button class="reveal-btn" onclick="revealText(2)">Show Wish</button>
+    <p id="msg2" style="display:none; margin-top:20px; font-size:1.2rem;">
+      I hope this year brings you softness, victories, the loudest laughs,  
+      and the quietest peace. You deserve every good thing coming your way.
+    </p>
+  </div>
+</section>
+
+<!-- =========================
+     FINAL SECTION
+     ========================= -->
+<section id="final">
+  <div class="fade-in">
+    <h1>🎂 One More Thing…</h1>
+    <p>
+      Thank you for being you — for every silly moment, every deep conversation,  
+      every time you made life brighter just by being in it.
+    </p>
+    <p style="font-size:1.6rem; margin-top:10px; font-weight:600;">
+      Happy Birthday, my dear friend.  
+      Here’s to another year of memories — the best ones yet. 💜
+    </p>
+  </div>
+</section>
+
+<script>
+/* =========================
+   SCROLL REVEAL ANIMATION
+   ========================= */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = 1;
+      entry.target.style.transform = "translateY(0px)";
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+/* =========================
+   REVEAL BUTTON MESSAGES
+   ========================= */
+function revealText(id) {
+  const el = document.getElementById("msg" + id);
+  el.style.display = "block";
+  el.style.opacity = 0;
+  setTimeout(() => el.style.transition = "1s", 10);
+  setTimeout(() => el.style.opacity = 1, 50);
+}
+
+/* =========================
+   PARTICLE BACKGROUND
+   ========================= */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+let particles = [];
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+class Particle {
+  constructor() {
+    this.reset();
+  }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 2 + 0.5;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.speedY = (Math.random() - 0.5) * 0.3;
+    this.alpha = Math.random() * 0.4 + 0.1;
+  }
+  draw() {
+    ctx.fillStyle = "rgba(255,255,255," + this.alpha + ")";
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+    ctx.fill();
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x<0 || this.x>canvas.width || this.y<0 || this.y>canvas.height) {
+      this.reset();
+    }
+  }
+}
+
+for (let i = 0; i < 160; i++) {
+  particles.push(new Particle());
+}
+
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p => {
+    p.update();
+    p.draw();
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>
